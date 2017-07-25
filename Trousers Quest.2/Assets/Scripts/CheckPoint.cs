@@ -5,17 +5,22 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Interactuable))]
 public class CheckPoint : MonoBehaviour {
 
+	//1.START
     void Start()
     {
-        this.GetComponent<BoxCollider2D>().isTrigger = true;
+        GetComponent<BoxCollider2D>().isTrigger = true;
     }
-    void OnTriggerStay2D (Collider2D other)
+
+	//2.COLISIÓN CON EL JUGADOR
+    public void Activado (GameObject other)
     {
         if (other.GetComponent<PlayerController>() && Input.GetKey(KeyCode.Space))
         {
-            this.GetComponent<Interactuable>().Interactuado();
+			//Interactúa
+            GetComponent<Interactuable>().Interactuado();
             other.GetComponent<PlayerController>().enabled = false;
-            GameManager.instance.CheckPoint(this.gameObject);
+
+			//Guarda la partida
 			GameManager.instance.GuardaPartida();
         }
     }

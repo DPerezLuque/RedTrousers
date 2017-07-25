@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trousers Quest.2", "Trousers Quest.2.csproj", "{CFE6C053-1E64-5800-19DA-79EAC86DA556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trousers Quest.2.Editor", "Trousers Quest.2.Editor.csproj", "{7C961B32-8B9B-16FB-EC1C-359C9074FB65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFE6C053-1E64-5800-19DA-79EAC86DA556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE6C053-1E64-5800-19DA-79EAC86DA556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE6C053-1E64-5800-19DA-79EAC86DA556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE6C053-1E64-5800-19DA-79EAC86DA556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C961B32-8B9B-16FB-EC1C-359C9074FB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C961B32-8B9B-16FB-EC1C-359C9074FB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C961B32-8B9B-16FB-EC1C-359C9074FB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C961B32-8B9B-16FB-EC1C-359C9074FB65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

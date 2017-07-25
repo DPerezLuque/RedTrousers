@@ -9,8 +9,14 @@ public class TriggersMusica : MonoBehaviour {
 	void OnTriggerExit2D() 
 	{
 		if (GameManager.instance.MusicaActual() == zona1)
+		{
 			GameManager.instance.PlayMusic(zona2);
-		else
+			GameManager.instance.SetMusica(zona2);
+		}
+		else 
+		{
 			GameManager.instance.PlayMusic(zona1);
+			GameManager.instance.SetMusica(zona1);
+		}
 	}
 }

@@ -7,7 +7,8 @@ Nefasto: Desde que las polillas llegaron ningun sitio es seguro.
 Por cierto, y tus pantalones rojos?
 *
 2
-Maricarmen: ¡Emma, cuanto tiempo! Veo que al final decidiste hacerte la operacion de cambio de sexo.
+Maricarmen: ¡Emma, cuanto tiempo! 
+Veo que al final decidiste hacerte la operacion de cambio de sexo.
 Me alegro por ti!
 *
 3
@@ -30,4 +31,5 @@ Soldado: ¿Eres Emmanuel?
 El Dragon Purpura precisa de tu presencia. 
 Te espera en su castillo, al este.
 *
-
+8
+*

@@ -101,27 +101,25 @@ public class Combate : MonoBehaviour
 			invulnerable = false;
 			envenenado = false;
 
-			SceneManager.LoadScene("Interacción");
+
 			if (GameManager.instance.Vida() <= 0)
-				GameManager.instance.VuelveACheckpoint(jugador);
+				GameManager.instance.MuereEnCombate();
 			else 
 			{
 				if (logroVeneno)
 					GameManager.instance.ConsigueLogro(7);
 
                 if ((compEnem.numEnemigo == 2) || (compEnem.numEnemigo == 5) || (compEnem.numEnemigo == 6))
-                {
                     GameManager.instance.AumentaEstado();
-                    Debug.Log(GameManager.estadoPersonaje);
-                }
 
-                if (compEnem.numEnemigo == 6)
-                {
+                if (compEnem.numEnemigo == 6)               
                     GameManager.instance.ConsigueLogro(5);
-                    //SceneManager.LoadScene("Créditos");
-                }
-					
+
+				//Restauramos al completo la vida
+				GameManager.instance.SumaVida(GameManager.instance.VidaMaxima() - GameManager.instance.Vida());
 			}
+
+			SceneManager.LoadScene("Interacción");
         }
 	}
 
@@ -137,7 +135,7 @@ public class Combate : MonoBehaviour
 				//Pantalón blanco
 				case 0:
 					logroVeneno = false;
-					efectosJug.PlayOneShot(compJug.Sonidos[3]);
+					efectosJug.PlayOneShot(compJug.Sonidos[3], GameManager.volu * 1.5f);
 					jugador.transform.GetChild(1).GetChild(3).gameObject.SetActive(true);
 					Invoke("QuitaEfecto", 1f);
 					if (bufoAtaque)
@@ -148,7 +146,7 @@ public class Combate : MonoBehaviour
 				//Guantes	
 				case 1:
 					logroVeneno = false;
-					efectosJug.PlayOneShot(compJug.Sonidos[4]);
+					efectosJug.PlayOneShot(compJug.Sonidos[4], GameManager.volu * 0.9f);
 					jugador.transform.GetChild(1).GetChild(4).gameObject.SetActive(true);
 					Invoke("QuitaEfecto", 1f);
 					bufoAtaque = true;
@@ -156,7 +154,7 @@ public class Combate : MonoBehaviour
 					break;
 				//Sombrero	
 				case 2:
-					efectosJug.PlayOneShot(compJug.Sonidos[0]);
+					efectosJug.PlayOneShot(compJug.Sonidos[0], GameManager.volu);
 					jugador.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 					Invoke("QuitaEfecto", 1f);
 					//Logro nº1
@@ -172,7 +170,7 @@ public class Combate : MonoBehaviour
 					break;
 				//Botas	
 				case 3:
-					efectosJug.PlayOneShot(compJug.Sonidos[2]);
+					efectosJug.PlayOneShot(compJug.Sonidos[2], GameManager.volu);
 					jugador.transform.GetChild(1).GetChild(2).gameObject.SetActive(true);
 					if (!envenenado)
 					{
@@ -186,7 +184,7 @@ public class Combate : MonoBehaviour
 					break;
 				//Camiseta	
 				case 4:
-					efectosJug.PlayOneShot(compJug.Sonidos[1]);
+					efectosJug.PlayOneShot(compJug.Sonidos[1], GameManager.volu);
 					jugador.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
 					invulnerable = true;
 					bufoDefensa = true;
@@ -196,7 +194,7 @@ public class Combate : MonoBehaviour
 				//Pantalones rojos	
 				case 5:
 					logroVeneno = false;
-					efectosJug.PlayOneShot(compJug.Sonidos[5]);
+					efectosJug.PlayOneShot(compJug.Sonidos[5], GameManager.volu*1.3f);
 					jugador.transform.GetChild(1).GetChild(5).gameObject.SetActive(true);
 					Invoke("QuitaEfecto", 1f);
 					if (bufoAtaque)
@@ -219,7 +217,7 @@ public class Combate : MonoBehaviour
 			else 
 			{
 				Invoke("MataEnemigo", 1f);
-				compAudio.PlayOneShot(compAudio.clip, 5f);
+				compAudio.PlayOneShot(compAudio.clip, GameManager.volu * 2.5f);
 			}
 		}
 		else
@@ -231,32 +229,41 @@ public class Combate : MonoBehaviour
 	{
 		int vidaJug=GameManager.instance.Vida();
 		compEnem.transform.GetChild(1).gameObject.SetActive(true);
-		compEnem.sonido.PlayOneShot(compEnem.sonido.clip);
+		compEnem.sonido.PlayOneShot(compEnem.sonido.clip, GameManager.volu);
 		compEnem.dañorec.text = "";
 
 		if (compEnem.hp > 0)
 		{
+			//Vulnerabilidad
 			if (!invulnerable)
 			{
+				//El enemigo ataca
 				if (!bufoDefensa)
 					GameManager.instance.QuitaVida(enemigo.GetComponent<Enemigo>().poder);
 				else
 					GameManager.instance.QuitaVida((int)(enemigo.GetComponent<Enemigo>().poder * 0.75));
 
+				//Mostramos la vida restante
 				if (vidaJug - GameManager.instance.Vida() > 0)
 				{
+					//Comprobamos que no hay salud negativa
+					if (GameManager.instance.Vida() < 0)
+						GameManager.instance.SumaVida(0 - GameManager.instance.Vida());
+					
 					compJug.dañorec.text = (vidaJug - GameManager.instance.Vida()).ToString();
 					compJug.numVida.text = GameManager.instance.Vida() + "/" + GameManager.instance.VidaMaxima();
 				}
 			}
 			else
-				efectosJug.PlayOneShot(compJug.Sonidos[1]);
+				efectosJug.PlayOneShot(compJug.Sonidos[1], GameManager.volu);
+
+			//Comprobamos si el jugador ha muerto
 			if (GameManager.instance.Vida() > 0)
 				Invoke("FinTurno", 2f);
 			else 
 			{
 				Invoke("FinTurno", 0.8f);
-				compAudio.PlayOneShot(compAudio.clip, 5f);
+				compAudio.PlayOneShot(compAudio.clip, GameManager.volu*2.5f);
 			}
 
 		}
@@ -275,9 +282,9 @@ public class Combate : MonoBehaviour
 
 
 		//Veneno
-		if (envenenado && (!bufoDefensa || elección != 4))
+		if (envenenado && (!bufoDefensa || elección != 4) && (GameManager.instance.EstadoPersonaje()!=3 || elección!=4))
 		{
-			efectosJug.PlayOneShot(compJug.Sonidos[2]);
+			efectosJug.PlayOneShot(compJug.Sonidos[2], GameManager.volu);
 			jugador.transform.GetChild(1).GetChild(2).gameObject.SetActive(true);
 			compEnem.dañorec.text = ((int)(compEnem.saludInicial * porcVeneno)).ToString();
 			compEnem.hp -= (int)(compEnem.saludInicial * porcVeneno);

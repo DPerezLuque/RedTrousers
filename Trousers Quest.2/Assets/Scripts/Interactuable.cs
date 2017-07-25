@@ -18,9 +18,12 @@ public class Interactuable : MonoBehaviour {
     public int numNPC;
     public bool AumentaLevel;
     bool done = false;
+    int indOr, j;
     //LogroPapelera
     public bool esPapelera;
-    // Use this for initialization
+    public int nivelAAumentar;
+
+    //1.START
     void Start () {
  
         if(this.GetComponent<BoxCollider>())
@@ -30,17 +33,34 @@ public class Interactuable : MonoBehaviour {
         //separa por líneas y las guarda en el array
         lineasDialogo = archivoTexto.text.Split('\n');
         Panel.SetActive(false);
+        bool prueba = false;
+        while (i < lineasDialogo.Length && !prueba)
+        {
+            if (lineasDialogo[i][0] != indicador)
+            {
+                i++;
+            }
+            else
+            {
+                prueba = true;
+            }
+        }
+        j = i;
+        indOr = j;
     }
 
+	//2.UPDATE
     void Update()
-    {
+    { 
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
             if (interactuado)
             {
                 Player.GetComponent<PlayerController>().compAudio.PlayOneShot
-                        (Player.GetComponent<PlayerController>().sonidos[1]);
-                if (lineasDialogo[i][0] == '*')
+                        (Player.GetComponent<PlayerController>().sonidos[1], GameManager.volu);
+                j++;
+                texto.text = lineasDialogo[j];
+                if (lineasDialogo[j][0] == '*')
                 {
                     texto.text = " ";
                     if (Panel != null)
@@ -55,42 +75,33 @@ public class Interactuable : MonoBehaviour {
                         }
                     }
                 }
-                else
+                /*else
                 {
-                    texto.text = lineasDialogo[i];
-                }
-                i++;
+                    texto.text = lineasDialogo[j];
+                }*/
+                
             }
         }
     }
+
+	//3.MÉTODO PARA SER INTERACTUADO
     public void Interactuado()
     {
-
         if (!interactuado)
         {
-            i = 0;
+            Player.GetComponent<PlayerController>().vel = Player.GetComponent<PlayerController>().velOr; //Restaura vel original del jugador
             Player.GetComponent<PlayerController>().compAudio.PlayOneShot
-				  (Player.GetComponent<PlayerController>().sonidos[1]);
+				  (Player.GetComponent<PlayerController>().sonidos[1], GameManager.volu);
+            j = indOr;
             Player.GetComponent<PlayerController>().enabled = false;
             if(Panel != null)
             Panel.SetActive(true);
-            //indicador = numero de texto que corresponda        
-            bool prueba = false;
-            interactuado = true;
-            while (i < lineasDialogo.Length && !prueba)
-            {
-                if (lineasDialogo[i][0] != indicador)
-                {
-                    i++;
-                }
-                else
-                {
-                    prueba = true;
-                }
-            }
-                i++;
-                texto.text = lineasDialogo[i];
+            //indicador = numero de texto que corresponda
+            j++;        
+            texto.text = lineasDialogo[j];
+            Invoke("Interact", 0.1f);
         }
+
         //Comprueba si has hablado con todos los NPC del juego
         if (esNPC)
         {
@@ -109,27 +120,31 @@ public class Interactuable : MonoBehaviour {
             {
                 GameManager.instance.ConsigueLogro(2);
             }
-
-            print("Npcs hablados?" + todosHablados);
         }
 
         //LogroPapelera
         if (esPapelera)
         {
             GameManager.instance.ConsigueLogro(8);
-            print("LogroDone");
         }
-
         if (AumentaLevel && !done)
         {
-            GameManager.instance.AumentaEstado();
+            GameManager.estadoPersonaje = nivelAAumentar;
             done = true;
-            print("estadi" + GameManager.instance.EstadoPersonaje());
         }
     }
+
+	//4.ACTIVAR
     void Activar()
     {
         Player.GetComponent<PlayerController>().enabled = true;
+        CancelInvoke();
+    }
+
+    //5.INTERACT
+    void Interact()
+    {
+        interactuado = true;
         CancelInvoke();
     }
       

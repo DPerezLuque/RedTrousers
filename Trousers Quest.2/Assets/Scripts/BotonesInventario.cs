@@ -20,7 +20,7 @@ public class BotonesInventario : MonoBehaviour {
     {
         GameObject Player = FindObjectOfType<PlayerController>().gameObject;
         Player.GetComponent<PlayerController>().compAudio.PlayOneShot
-                  (Player.GetComponent<PlayerController>().sonidos[1]);
+		      (Player.GetComponent<PlayerController>().sonidos[1], GameManager.volu);
         i = 0;
             if (Panel != null)
                 Panel.SetActive(true);       

@@ -29,19 +29,20 @@ public class NPCRandom : MonoBehaviour {
         if (interactuado && Input.GetKeyDown(KeyCode.Space))
         {
             Panel.SetActive(false);
-            interactuado = false;
             Player.GetComponent<PlayerController>().enabled = true;
+            Invoke("Activar", 0.1f);
         }
 		
 	}
 
     public void Activado()
     {
+        Player.GetComponent<PlayerController>().compAudio.PlayOneShot
+                  (Player.GetComponent<PlayerController>().sonidos[1], GameManager.volu);
         Panel.SetActive(true);
         texto.text = lineasDialogo[Random.Range(0, 30)];
-        Invoke("Activar", 0.2f);
+        Invoke("Activar", 0.01f);
         cont++;
-        print(cont);
         //LOGRO CANSINO
         if(cont >= 30)
         {
@@ -51,6 +52,7 @@ public class NPCRandom : MonoBehaviour {
 
     void Activar()
     {
-        interactuado = true; ;
+        interactuado = !interactuado;
+        CancelInvoke();
     }
 }

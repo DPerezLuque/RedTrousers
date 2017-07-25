@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
 
-    public float vel = 100f;
+    public float vel = 5f;
     public float distancia = .1f;
+    public float velSprint = 10f;
     RaycastHit hit;
     Animator anim;
     float altura;
@@ -20,19 +21,19 @@ public class PlayerController : MonoBehaviour
     GameObject casa;
     bool interactuar = true;
 	float tiempoAndar;
-
 	[HideInInspector]public AudioSource compAudio;
 	public AudioClip[] sonidos = new AudioClip[2];
     //LOGRO CASAS
     static bool[] casasVisitadas = new bool [7];
+    //Controlar que sea tu casa
+    [HideInInspector]
+    public int numCasa;
     void Awake()
     {
-        GameManager.spaguetti = false;
         for(int i = 0; i < casasVisitadas.Length; i++)
-        {
             casasVisitadas[i] = false;
-        }
     }
+
     //1.START
     void Start()
     {
@@ -41,12 +42,38 @@ public class PlayerController : MonoBehaviour
 		anim.SetInteger("Estado", GameManager.instance.EstadoPersonaje());
         altura = this.transform.localScale.y / 12;
         velOr = vel;
+
+        //OBTENER COORDENADAS DE LA CASA
         if(Salida != null)
         {
             posXSalida = Salida.transform.position.x;
-            posYSalida = Salida.transform.position.y; 
+            posYSalida = Salida.transform.position.y;
         }
-		transform.position = new Vector3(GameManager.menuX, GameManager.menuY, 0f); 
+
+		//1.Sale de combate
+		if (GameManager.combateX != 0)
+		{
+			transform.position = new Vector3(GameManager.combateX, GameManager.combateY, transform.position.z);
+			GameManager.combateX = 0;
+			GameManager.combateY = 0;
+		}
+
+		//2.Entra desde el menú
+		else if (GameManager.guardadoX != 0) 
+		{
+			transform.position = new Vector3(GameManager.guardadoX, GameManager.guardadoY, transform.position.z);
+		}
+
+		//3.Sale de una casa
+		else if (Salida != null)
+		{
+			posXSalida = Salida.transform.position.x;
+			posYSalida = Salida.transform.position.y;
+		}
+
+		//4.Ha muerto
+		else
+			transform.position = new Vector3(14f, 16f, 0f);
     }
 
     //2.UPDATE
@@ -66,30 +93,33 @@ public class PlayerController : MonoBehaviour
     void Interactuar()
     {
         
-        if (Input.GetKey(KeyCode.Space) && interactuar)
+        if (interactuar)
         {
-			
-            
-            Collider2D hitCol = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y),0.5f);
-			//se realiza una búsqueda de los objetos que se pueden coger
-			if (hitCol != null)
-			{
-                interactuar = false;
-                if (hitCol.gameObject.GetComponent<Interactuable>())
-				{
-					hitCol.gameObject.GetComponent<Interactuable>().Interactuado();
-					this.GetComponent<PlayerController>().enabled = false;
-				}
-				else if (hitCol.gameObject.GetComponent<NPCRandom>())
-				{
-					hitCol.gameObject.GetComponent<NPCRandom>().Activado();
-					this.GetComponent<PlayerController>().enabled = false;
-				}
-			}
-            
-            Invoke("Activar", 0.3f);
+            Collider2D[] hitCol = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y),0.5f);
+            //se realiza una búsqueda de los objetos que se pueden coger
+            for (int i = 0; i < hitCol.Length; i++)
+            {
+                if (hitCol[i] != null)
+                {
+                    interactuar = false;
+                    if (hitCol[i].gameObject.GetComponent<Interactuable>() && !hitCol[i].GetComponent<Activariggers>())
+                    {
+                        hitCol[i].gameObject.GetComponent<Interactuable>().Interactuado();
+                        this.GetComponent<PlayerController>().enabled = false;
+                        if (hitCol[i].GetComponent<CheckPoint>())
+                        {
+                            hitCol[i].GetComponent<CheckPoint>().Activado(this.gameObject);
+                        }
+                    }
+                    else if (hitCol[i].gameObject.GetComponent<NPCRandom>())
+                    {
+                        hitCol[i].gameObject.GetComponent<NPCRandom>().Activado();
+                        this.GetComponent<PlayerController>().enabled = false;
+                    }
+                }
+            }
         }
-       
+        Invoke("Activar", 0.3f);
     }
 
 	//4.MOVIMIENTO
@@ -151,35 +181,30 @@ public class PlayerController : MonoBehaviour
 			if (!Physics.Raycast(new Vector3(transform.position.x, transform.position.y - altura, 0f), transform.up, out hit, distancia) || hit.collider.isTrigger)
 				transform.Translate(new Vector3(0f, vel * Time.deltaTime, 0f));
 		}
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Interactuar();
-        }
 		else
 		{
 			anim.SetBool("Andando", false);
 			anim.SetBool("MismaDir", false);
 		}
 
-		if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Interactuar();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
 		{
             FindObjectOfType<Inventario>().SendMessage("Activado",activar);
             activar = !activar;
         }
 
 		else if (Input.GetKeyDown(KeyCode.Escape))
-		{
-			GameManager.menuX = transform.position.x;
-			GameManager.menuY = transform.position.y;
-			GameManager.instance.GuardaPartida();
 			SceneManager.LoadScene("Menú");
-		}
 
-
-		//Correr
+        //Correr
 		if (Input.GetKeyDown(KeyCode.LeftShift))
 		{
-			vel = velOr + vel;
+			vel = velSprint;
 		}
 
 		else if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -188,54 +213,55 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-    //Salir/Entrar de Casas
+    //5.SALIR/ENTRAR EN LAS CASAS
     void OnTriggerStay2D(Collider2D other)
     {
-        
         if (other.GetComponent<Traslado>())
         {
-                if (!other.gameObject.GetComponent<Traslado>().salida)
-                {
+			if (!other.gameObject.GetComponent<Traslado>().salida)
+			{
 				GameManager.instance.PlayMusic(6);
 
-                casa = other.gameObject; 
-                GameObject.FindGameObjectWithTag("NPCS").transform.GetChild(other.GetComponent<Traslado>().numCasa).gameObject.SetActive(true);
-                npcDesactivar = GameObject.FindGameObjectWithTag("NPCS").transform.GetChild(other.GetComponent<Traslado>().numCasa).gameObject;
-                this.transform.position = new Vector2(posXSalida, posYSalida);
+				casa = other.gameObject;
+				GameObject.FindGameObjectWithTag("NPCS").transform.GetChild(other.GetComponent<Traslado>().numCasa).gameObject.SetActive(true);
+				npcDesactivar = GameObject.FindGameObjectWithTag("NPCS").transform.GetChild(other.GetComponent<Traslado>().numCasa).gameObject;
+				transform.position = new Vector2(posXSalida, posYSalida);
+                numCasa = other.GetComponent<Traslado>().numCasa;
+                print(numCasa + "TT");
+                //LOGRO CASAS
                 casasVisitadas[other.GetComponent<Traslado>().numCasa] = true;
-                int i = 0;
-                bool todasVisitadas = true;
-                while(i < casasVisitadas.Length && todasVisitadas)
-                {
-                    if (!casasVisitadas[i])
-                    {
-                        todasVisitadas = false;
-                    }
-                    i++;
-                }
-                if (todasVisitadas)
-                {
-                    GameManager.instance.ConsigueLogro(4);
-                }
-                }
-                else
-                {
-				    GameManager.instance.PlayMusic(GameManager.instance.MusicaActual());
-                    npcDesactivar.SetActive(false);
-                    this.transform.position = new Vector2(casa.transform.position.x, casa.transform.position.y);
-                }
+				int i = 0;
+				bool todasVisitadas = true;
+				while (i < casasVisitadas.Length && todasVisitadas)
+				{
+					if (!casasVisitadas[i])
+						todasVisitadas = false;
+					i++;
+				}
+				if (todasVisitadas)
+					GameManager.instance.ConsigueLogro(4);
+			}
+
+
+			else
+			{
+				GameManager.instance.PlayMusic(GameManager.instance.MusicaActual());
+				npcDesactivar.SetActive(false);
+				this.transform.position = new Vector2(casa.transform.position.x, casa.transform.position.y);
+			}
         }
     }
+
+	//6.ACTIVAR
     void Activar()
     {
         interactuar = true;
+        CancelInvoke();
     }
 
+	//7.SONIDO AL ANDAR
 	void SonidoAndar() 
 	{
-		compAudio.PlayOneShot(sonidos[0], 2f);
+		compAudio.PlayOneShot(sonidos[0], GameManager.volu * 2);
 	}
-
-
-
 }

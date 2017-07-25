@@ -33,31 +33,31 @@ public class Enemigo : MonoBehaviour
 			case TipoEnemigo.Polilla:
 				numEnemigo = 0;
 				hp = 40;
-				poder = 10;
+				poder = 15;
 				break;
 			case TipoEnemigo.Polillo:
 				numEnemigo = 1;
 				hp = 50;
-				poder = 15;
+				poder = 17;
 				break;
 			case TipoEnemigo.Dragón:
 				numEnemigo = 2;
-				hp = 60;
-				poder = 20;
+				hp = 70;
+				poder = 17;
 				break;
 			case TipoEnemigo.Snowman:
 				numEnemigo = 3;
-				hp = 70;
-				poder = 25;
+				hp = 60;
+				poder = 22;
 				break;
 			case TipoEnemigo.Robot:
 				numEnemigo = 4;
-				hp = 80;
+				hp = 75;
 				poder = 30;
 				break;
 			case TipoEnemigo.RobotBoss:
 				numEnemigo = 5;
-				hp = 100;
+				hp = 85;
 				poder = 35;
 				break;
 			default:

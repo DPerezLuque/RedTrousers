@@ -8,11 +8,13 @@ public class Inventario : MonoBehaviour {
     public GameObject interfaz;
     bool aux;
 
+	//1.START
     void Start()
     {
         interfaz.SetActive(false);
     }
 
+	//2.ACTIVADO
 	void Activado(ref bool activar)
     {
         interfaz.transform.GetChild(2).gameObject.SetActive(false);
@@ -23,9 +25,5 @@ public class Inventario : MonoBehaviour {
         }
         interfaz.transform.GetChild(1).GetChild(GameManager.instance.EstadoPersonaje()).gameObject.SetActive(activar);
         aux = !activar;
-        //desactivar vel personaje cuando tengamos fondo
-        //espero que diego no lea esto
-        //diego se come los mocos jujujuj
-        //Meter a  miniman en los creditos
     }
 }
