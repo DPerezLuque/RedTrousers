@@ -21,7 +21,7 @@ public class CheckPoint : MonoBehaviour {
             other.GetComponent<PlayerController>().enabled = false;
 
 			//Guarda la partida
-			GameManager.instance.GuardaPartida();
+			GameManager.instance.GuardaPartida(false);
         }
     }
 }

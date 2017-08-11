@@ -1,12 +1,12 @@
-0
-Champi Niam: niam niam niam
+﻿0
+Champi Ñam: ñam ñam ñam
 *
 1
-Champi Niam: Vas a morir.
+Champi Ñam: Vas a morir.
 *
 2
-Champi Niam: Holi. Digo niam.
+Champi Ñam: Holi. Digo ñam.
 *
 3
-Emma: Que hago rebuscando en la basura?
+Emma: ¿Qué hago rebuscando en la basura?
 *

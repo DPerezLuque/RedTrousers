@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class PlayerController : MonoBehaviour
     public float distancia = .1f;
     public float velSprint = 10f;
     RaycastHit hit;
-    Animator anim;
+	[HideInInspector]
+    public Animator anim;
     float altura;
     [HideInInspector]
     public float velOr;
@@ -79,14 +81,14 @@ public class PlayerController : MonoBehaviour
     //2.UPDATE
     void Update()
     {
-        Movimiento();
+		if(interactuar)
+			Movimiento();
 		tiempoAndar += Time.deltaTime;
 		if (anim.GetBool("Andando") && tiempoAndar > 0.3)
 		{
 			SonidoAndar();
 			tiempoAndar = 0;
 		}
-      
     }
 
     //3.INTERACTÚA CON OBJETOS/NPCs
@@ -105,7 +107,10 @@ public class PlayerController : MonoBehaviour
                     if (hitCol[i].gameObject.GetComponent<Interactuable>() && !hitCol[i].GetComponent<Activariggers>())
                     {
                         hitCol[i].gameObject.GetComponent<Interactuable>().Interactuado();
-                        this.GetComponent<PlayerController>().enabled = false;
+                        GetComponent<PlayerController>().enabled = false;
+						anim.SetBool("Andando", false);
+						anim.SetBool("MismaDir", false);
+
                         if (hitCol[i].GetComponent<CheckPoint>())
                         {
                             hitCol[i].GetComponent<CheckPoint>().Activado(this.gameObject);
@@ -114,7 +119,10 @@ public class PlayerController : MonoBehaviour
                     else if (hitCol[i].gameObject.GetComponent<NPCRandom>())
                     {
                         hitCol[i].gameObject.GetComponent<NPCRandom>().Activado();
-                        this.GetComponent<PlayerController>().enabled = false;
+                        GetComponent<PlayerController>().enabled = false;
+						anim.SetBool("Andando", false);
+						anim.SetBool("MismaDir", false);
+					
                     }
                 }
             }
@@ -192,14 +200,18 @@ public class PlayerController : MonoBehaviour
             Interactuar();
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+		if (Input.GetKeyDown(KeyCode.I))
 		{
-            FindObjectOfType<Inventario>().SendMessage("Activado",activar);
-            activar = !activar;
-        }
+			FindObjectOfType<Inventario>().SendMessage("Activado", activar);
+			activar = !activar;
+		}
 
 		else if (Input.GetKeyDown(KeyCode.Escape))
+		{
 			SceneManager.LoadScene("Menú");
+			if (!File.Exists("partida"))
+				File.Delete("combates");
+		}
 
         //Correr
 		if (Input.GetKeyDown(KeyCode.LeftShift))

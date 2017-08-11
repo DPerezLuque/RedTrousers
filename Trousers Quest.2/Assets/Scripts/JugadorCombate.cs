@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class JugadorCombate : MonoBehaviour {
 
 	//Stats
-	int saludInicial;
+	int saludInicial, hp;
 
 	//Canvas
 	[HideInInspector]public Transform barraVida;
@@ -31,12 +31,24 @@ public class JugadorCombate : MonoBehaviour {
 
 		numVida = transform.GetChild(3).gameObject.GetComponent<TextMesh>();
 		numVida.text = GameManager.instance.Vida() + "/" + GameManager.instance.VidaMaxima();
+
+		hp = GameManager.instance.Vida();
 	}
 	
 	//2.UPDATE
 	void Update () 
 	{
-		int hp = GameManager.instance.Vida();
+		if (hp != GameManager.instance.Vida())
+			ActualizaVida();
+	}
+
+	//3.ACTUALIZA VIDA
+	void ActualizaVida()
+	{
+		float longActual = barraVida.localScale.x;
+		hp = GameManager.instance.Vida();
 		barraVida.localScale = new Vector3(longInicial / saludInicial * hp, barraVida.localScale.y, 1f);
+
+		barraVida.transform.Translate(new Vector3((barraVida.localScale.x - longActual) / 2, 0f, 0f));
 	}
 }

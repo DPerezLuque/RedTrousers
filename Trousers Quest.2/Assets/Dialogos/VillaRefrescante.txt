@@ -1,14 +1,13 @@
 ﻿0
-Miss Noel: Me estoy congelando!... 
-¿Que pasa, que por ser de aqui no puedo quejarme del frio?
+Miss Noel: ¡Me estoy congelando!... 
+¿Qué pasa, que por ser de aquí no puedo quejarme del frio?
 *
 1
 Nachete: Hoy ha venido un hombre de Clothtown. 
-Es fuerte, y bastante guapo la verdad… ¿Como dices, que tiene esposa?
+Es fuerte, y bastante guapo la verdad… ¿Cómo dices, que tiene esposa?
 *
 2
-Pescador: No pesco nada con esta caña tan vieja. 
-¿Conoces algun guru pescador?
+Pescador: No pesco nada con esta caña tan vieja. ¿Conoces algun gurú pescador?
 *
 3
 Blue: Estoy entrenando para acabar con las polillas.

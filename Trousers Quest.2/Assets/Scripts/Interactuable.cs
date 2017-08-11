@@ -17,7 +17,6 @@ public class Interactuable : MonoBehaviour {
     public bool esNPC;
     public int numNPC;
     public bool AumentaLevel;
-    bool done = false;
     int indOr, j;
     //LogroPapelera
     public bool esPapelera;
@@ -94,6 +93,9 @@ public class Interactuable : MonoBehaviour {
 				  (Player.GetComponent<PlayerController>().sonidos[1], GameManager.volu);
             j = indOr;
             Player.GetComponent<PlayerController>().enabled = false;
+			Player.GetComponent<PlayerController>().anim.SetBool("Andando", false);
+			Player.GetComponent<PlayerController>().anim.SetBool("MismaDir", false);
+				
             if(Panel != null)
             Panel.SetActive(true);
             //indicador = numero de texto que corresponda
@@ -127,10 +129,9 @@ public class Interactuable : MonoBehaviour {
         {
             GameManager.instance.ConsigueLogro(8);
         }
-        if (AumentaLevel && !done)
+        if (AumentaLevel && GameManager.instance.EstadoPersonaje() < nivelAAumentar)
         {
-            GameManager.estadoPersonaje = nivelAAumentar;
-            done = true;
+            GameManager.instance.AumentaEstado();        
         }
     }
 

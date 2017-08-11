@@ -36,7 +36,7 @@ public class BotonImagenes : MonoBehaviour {
                         }
                         else if(i == 0)
                         {
-                            imagenActivar.transform.GetChild(i).transform.GetChild(2).GetComponent<Text>().text = "Usa el sombrero teniendo la salud al máximo";
+                            imagenActivar.transform.GetChild(i).transform.GetChild(2).GetComponent<Text>().text = "Usa el sombrero teniendo la salud al maximo";
                         }
                     }
                 }

@@ -95,7 +95,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1755049190973760
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 5afd89cdb8038964582dc4a233a21e01, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190247
+    rgba: 4278190080
 --- !u!102 &102737187622457856
 TextMesh:
   serializedVersion: 3
@@ -463,7 +463,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 5afd89cdb8038964582dc4a233a21e01, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190247
+    rgba: 4278190335
 --- !u!114 &114048537425571560
 MonoBehaviour:
   m_ObjectHideFlags: 1

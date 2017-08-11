@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
 	//CANVAS
 	public GameObject canvas;
 	Text textoVida, textoPoder;
-	public GameObject Fondos;
+	GameObject MensajeLogro;
+
 
     //LOGRO NPCS
     public static bool [] NPcsHablados = new bool [27];
@@ -45,37 +46,21 @@ public class GameManager : MonoBehaviour
 		instance = this;
 		compAudio = GetComponent<AudioSource>();
 
-		//Pillamos las cosas del canvas
 		if (canvas != null)
-		{
-			textoVida = canvas.transform.GetChild(1).GetComponent<Text>();
-			textoPoder = canvas.transform.GetChild(2).GetComponent<Text>();
-		}
-
+			MensajeLogro = canvas.transform.GetChild(1).gameObject;
+			
         ActualizaVol(volu);
 
 		//MÚSICA A REPRODUCIR
 		//1.Música normal
 		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Interacción"))
-			PlayMusic(musicaActual);
-		//2.Música de combate
-		else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Combate"))
 		{
-			//Contra el boss
-			if (estadoPersonaje == 5)
-			{
-				PlayMusic(1);
-				Fondos.transform.GetChild(1).gameObject.SetActive(true);
-			}
-			//Normal 
-			else
-			{
-				PlayMusic(0);
-				Fondos.transform.GetChild(0).gameObject.SetActive(true);
-			}
+			PlayMusic(musicaActual);
+			textoVida = canvas.transform.GetChild(0).GetChild(1).GetComponent<Text>();
+			textoPoder = canvas.transform.GetChild(0).GetChild(2).GetComponent<Text>();
 		}
 
-		//3.Música del menú
+		//2.Música del menú
 		else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Menú"))
 		{
 			PlayMusic(0);
@@ -84,14 +69,14 @@ public class GameManager : MonoBehaviour
 			else
 			{
 				estadoPersonaje = 0;
-				hp = 25;
-				poder = 20;
+				hp = 20;
+				poder = 15;
 			}
 			vidaMaxima = hp;
 		}
 
-		//4.Música de créditos
-		else 
+		//3.Música de créditos
+		else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Créditos"))
 			PlayMusic(0);
 	}
 	
@@ -166,8 +151,11 @@ public class GameManager : MonoBehaviour
 	//13.ACTUALIZA EL GUI
 	public void ActualizaGUI()
 	{
-		textoVida.text = "" + vidaMaxima;
-		textoPoder.text = "" + poder;
+		if (textoVida != null)
+		{
+			textoVida.text = "" + vidaMaxima;
+			textoPoder.text = "" + poder;
+		}
 	}
 
 
@@ -202,6 +190,29 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
 		SceneManager.LoadScene("Interacción");
+
+		if (!File.Exists("partida"))
+		{
+			//Creamos el erchivo de los combates
+			StreamWriter salida = new StreamWriter("combates");
+			for (int i = 0; i < 11; i++)
+				salida.WriteLine("0");
+			salida.Close();
+		}
+		else
+		{
+			StreamReader entrada = new StreamReader("combates");
+			string s = "";
+			while (!entrada.EndOfStream)
+				s += entrada.ReadLine();
+			entrada.Close();
+
+			if ((s[4] == '1' && estadoPersonaje < 2)||(s[7] == '1' && estadoPersonaje < 4)) 
+			{
+				Invoke("AumentaEstado", 0.2f);
+				Invoke("Guarda", 0.5f);
+			}
+		}
     }
 
     //16.SALIR DEL JUEGO
@@ -217,19 +228,35 @@ public class GameManager : MonoBehaviour
     }
 
 	//18.GUARDA PARTIDA
-	public void GuardaPartida() 
+	public void GuardaPartida(bool finJuego) 
 	{
-		//Guardado de las posiciones por si seguimos jugando
-		guardadoX = (int)jugador.transform.position.x;
-		guardadoY = (int)jugador.transform.position.y;
+		if (!finJuego)
+		{
+			//Guardado de las posiciones por si seguimos jugando
+			guardadoX = (int)jugador.transform.position.x;
+			guardadoY = (int)jugador.transform.position.y;
+		}
 
 		//Escribimos los datos
 		StreamWriter salida = new StreamWriter("partida");
-		salida.WriteLine(estadoPersonaje);
-		salida.WriteLine(hp);
+		if (finJuego)
+			salida.WriteLine("5");
+		else
+			salida.WriteLine(estadoPersonaje);
+
+		salida.WriteLine(vidaMaxima);
 		salida.WriteLine(poder);
-		salida.WriteLine(guardadoX);
-		salida.WriteLine(guardadoY);
+		if (finJuego)
+		{
+			salida.WriteLine("0");
+			salida.WriteLine("0");
+		}
+
+		else
+		{
+			salida.WriteLine(guardadoX);
+			salida.WriteLine(guardadoY);
+		}
 		//Logros
 		for (int i = 0; i < 10; i++)
 		{
@@ -240,7 +267,10 @@ public class GameManager : MonoBehaviour
 		}
 		salida.WriteLine();
 
-		salida.WriteLine(musicaActual);
+		if (finJuego)
+			salida.Write("0");
+		else
+			salida.Write(musicaActual);
 		salida.Close();
 	}
 
@@ -261,20 +291,28 @@ public class GameManager : MonoBehaviour
 		hp = vidaMaxima;
 		if (estadoPersonaje == 5)
 			ConsigueLogro(1);
+		if (jugador != null)
+			jugador.GetComponent<PlayerController>().anim.SetInteger("Estado", estadoPersonaje);
+		
 	}
 
 	//21.CONSIGUE UN LOGRO
 	public void ConsigueLogro(int i) 
 	{
-		logros[i] = true;
-		Debug.Log("Logro " + i + " conseguido");
+		if (!logros[i])
+		{
+			MensajeLogro.SetActive(true);
+			Invoke("QuitaMensaje", 2f);
+			logros[i] = true;
+			Debug.Log("Logro " + i + " conseguido");
 
-		//Logro de diamante
-		int j = 0;
-		while (j<9 && logros[i])
-			j++;
-		if (j == 8)
-			logros[9] = true;
+			//Logro de diamante
+			int j = 0;
+			while (j < 9 && logros[i])
+				j++;
+			if (j == 8)
+				logros[9] = true;
+		}
 	}
 
 	//22.DEVUELVE EL TIPO DE ENEMIGO QUE ES
@@ -295,8 +333,21 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene("Menú");
 	}
 
+	//25.ESTABLECE LA MÚSICA ACTUAL
 	public void SetMusica(int i) 
 	{
 		musicaActual = i;
+	}
+
+	//26.QUITA EL MENSAJE DE LOGROS
+	void QuitaMensaje() 
+	{
+		MensajeLogro.SetActive(false);
+	}
+
+	//27.GUARDA(PARA INVOKES)
+	void Guarda() 
+	{
+		GuardaPartida(false);
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class Combate : MonoBehaviour 
 {
@@ -17,6 +18,8 @@ public class Combate : MonoBehaviour
 	JugadorCombate compJug;
 	Enemigo compEnem;
 	AudioSource efectosJug;
+
+	public GameObject Fondos;
 
 	//Variables de combate
 	bool bufoDefensa, bufoAtaque, invulnerable, envenenado, atacando = false;
@@ -63,6 +66,23 @@ public class Combate : MonoBehaviour
 		compEnem = enemigo.gameObject.GetComponent<Enemigo>();
 		efectosJug = jugador.GetComponent<AudioSource>();
 
+
+		//Música y fondos
+		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Combate"))
+		{
+			//Contra el boss
+			if (compEnem.numEnemigo==6)
+			{
+				GameManager.instance.PlayMusic(1);
+				Fondos.transform.GetChild(1).gameObject.SetActive(true);
+			}
+			//Normal 
+			else
+			{
+				GameManager.instance.PlayMusic(0);
+				Fondos.transform.GetChild(0).gameObject.SetActive(true);
+			}
+		}
 	}
 	
 	//2.UPDATE
@@ -101,19 +121,51 @@ public class Combate : MonoBehaviour
 			invulnerable = false;
 			envenenado = false;
 
-
+			//El PJ muere
 			if (GameManager.instance.Vida() <= 0)
 				GameManager.instance.MuereEnCombate();
+
+			//El enemigo muere
 			else 
 			{
+				string partida="";
+				StreamReader entrada = new StreamReader("combates");
+				while (!entrada.EndOfStream)
+					partida += entrada.ReadLine();
+				entrada.Close();
+
+				StreamWriter salida = new StreamWriter("combates");
+				int k = 0;
+				while (k<11)
+				{
+					if (partida[k] == 'X')
+						salida.WriteLine("1");
+					
+					else
+						salida.WriteLine(partida[k]);
+					k++;
+				}
+				salida.Close();
+
+				//Logros y esas cosas
 				if (logroVeneno)
+				{
+					//Insecticida
 					GameManager.instance.ConsigueLogro(7);
+				}
 
                 if ((compEnem.numEnemigo == 2) || (compEnem.numEnemigo == 5) || (compEnem.numEnemigo == 6))
                     GameManager.instance.AumentaEstado();
 
-                if (compEnem.numEnemigo == 6)               
-                    GameManager.instance.ConsigueLogro(5);
+				if (compEnem.numEnemigo == 6)
+				{
+					//Moth-illa
+					GameManager.instance.ConsigueLogro(5);
+					//Maaazo pro
+					if (!File.Exists("partida"))
+						GameManager.instance.ConsigueLogro(3);
+					GameManager.instance.GuardaPartida(true);
+				}
 
 				//Restauramos al completo la vida
 				GameManager.instance.SumaVida(GameManager.instance.VidaMaxima() - GameManager.instance.Vida());
@@ -149,13 +201,24 @@ public class Combate : MonoBehaviour
 					efectosJug.PlayOneShot(compJug.Sonidos[4], GameManager.volu * 0.9f);
 					jugador.transform.GetChild(1).GetChild(4).gameObject.SetActive(true);
 					Invoke("QuitaEfecto", 1f);
+
+					if (bufoAtaque)
+						compEnem.hp -= GameManager.instance.Poder();
+					else 
+					{
+						compEnem.hp -= (int)(GameManager.instance.Poder() * 0.85);
+						compJug.dañorec.color = Color.yellow;
+						compJug.dañorec.text = "↑ATK";
+					}
+
 					bufoAtaque = true;
-					compEnem.hp -= (int)(GameManager.instance.Poder() * 0.75);
 					break;
 				//Sombrero	
 				case 2:
 					efectosJug.PlayOneShot(compJug.Sonidos[0], GameManager.volu);
 					jugador.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+					compJug.dañorec.color = Color.green;
+					compJug.dañorec.text = "+"+GameManager.instance.VidaMaxima() / 2 + "HP";
 					Invoke("QuitaEfecto", 1f);
 					//Logro nº1
 					if (GameManager.instance.Vida() == GameManager.instance.VidaMaxima())
@@ -180,12 +243,18 @@ public class Combate : MonoBehaviour
 					else
 						porcVeneno += 0.05f;
 
+					compEnem.dañorec.color = Color.magenta;
+					compEnem.dañorec.text = "ENV "+porcVeneno*100+"%";
 					Invoke("QuitaEfecto", 1f);
 					break;
 				//Camiseta	
 				case 4:
 					efectosJug.PlayOneShot(compJug.Sonidos[1], GameManager.volu);
 					jugador.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+
+					compJug.dañorec.color = Color.yellow;
+					compJug.dañorec.text = "↑DEF";
+
 					invulnerable = true;
 					bufoDefensa = true;
 					transform.GetChild(4).GetChild(0).gameObject.SetActive(true);
@@ -230,7 +299,10 @@ public class Combate : MonoBehaviour
 		int vidaJug=GameManager.instance.Vida();
 		compEnem.transform.GetChild(1).gameObject.SetActive(true);
 		compEnem.sonido.PlayOneShot(compEnem.sonido.clip, GameManager.volu);
+		compJug.dañorec.text = "";
 		compEnem.dañorec.text = "";
+		compEnem.dañorec.color = Color.red;
+		compJug.dañorec.color = Color.red;
 
 		if (compEnem.hp > 0)
 		{

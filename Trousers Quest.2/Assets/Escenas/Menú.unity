@@ -886,14 +886,15 @@ RectTransform:
   m_Children:
   - {fileID: 372105269}
   - {fileID: 590268317}
+  - {fileID: 1837185260}
   - {fileID: 821469799}
   m_Father: {fileID: 1755420143}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.18125, y: 0}
-  m_AnchorMax: {x: 0.72875, y: 0.15544866}
-  m_AnchoredPosition: {x: -0.5, y: -0.1000061}
-  m_SizeDelta: {x: -1.4000015, y: 0.9000015}
+  m_AnchorMin: {x: 0.20625001, y: 0}
+  m_AnchorMax: {x: 0.75500005, y: 0.14422718}
+  m_AnchoredPosition: {x: -0.29999924, y: -2.2999878}
+  m_SizeDelta: {x: -2.4000015, y: 5.9000015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &332236039
 MonoBehaviour:
@@ -1214,7 +1215,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17441915, y: 0.19349149}
   m_AnchorMax: {x: 0.91, y: 0.56636435}
-  m_AnchoredPosition: {x: 0.35299683, y: -0.6000004}
+  m_AnchoredPosition: {x: 0.35299683, y: -0.5999985}
   m_SizeDelta: {x: 135.98, y: 13.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &372105270
@@ -1229,7 +1230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.733873, g: 0.6016436, b: 0.78676474, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1469,10 +1470,10 @@ RectTransform:
   m_Father: {fileID: 559208443}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.30535185, y: 0.39000002}
-  m_AnchorMax: {x: 0.89712226, y: 0.6}
-  m_AnchoredPosition: {x: -0.0000076293945, y: 0.18949986}
-  m_SizeDelta: {x: 733.7, y: 98.56}
+  m_AnchorMin: {x: 0.29375556, y: 0.34}
+  m_AnchorMax: {x: 0.8932445, y: 0.57000005}
+  m_AnchoredPosition: {x: 0.290802, y: -0.10000038}
+  m_SizeDelta: {x: 737.9, y: 113.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &450865836
 MonoBehaviour:
@@ -1499,14 +1500,14 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 80
+    m_MaxSize: 300
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ?????????????????
+  m_Text: ' - logro oculto -'
 --- !u!222 &450865837
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1543,10 +1544,10 @@ RectTransform:
   m_Father: {fileID: 125124460}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.32329068, y: 0.19000001}
-  m_AnchorMax: {x: 0.86100006, y: 0.4}
-  m_AnchoredPosition: {x: 0.20000076, y: 0.40000153}
-  m_SizeDelta: {x: 699.8, y: 98.1}
+  m_AnchorMin: {x: 0.305, y: 0.18}
+  m_AnchorMax: {x: 0.92700005, y: 0.44000003}
+  m_AnchoredPosition: {x: 0.0000038146973, y: -0.099998474}
+  m_SizeDelta: {x: 807.5, y: 117.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &463137116
 MonoBehaviour:
@@ -2254,11 +2255,11 @@ RectTransform:
   m_Children:
   - {fileID: 1998079433}
   m_Father: {fileID: 332236038}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.21554787, y: 0}
   m_AnchorMax: {x: 0.91, y: 1}
-  m_AnchoredPosition: {x: 0.10000038, y: 0.00000071956}
+  m_AnchoredPosition: {x: 0.099998474, y: 0.00000071956}
   m_SizeDelta: {x: 1.8999996, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &839376996
@@ -3185,10 +3186,10 @@ RectTransform:
   m_Father: {fileID: 1145045991}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.26478177, y: 0.193}
-  m_AnchorMax: {x: 0.9056092, y: 0.5583846}
-  m_AnchoredPosition: {x: 0.7265091, y: 1.4999962}
-  m_SizeDelta: {x: 855.5, y: 208.2}
+  m_AnchorMin: {x: 0.25760913, y: 0.11726123}
+  m_AnchorMax: {x: 0.92, y: 0.5583846}
+  m_AnchoredPosition: {x: -0.27980042, y: 1.9000015}
+  m_SizeDelta: {x: 864.05, y: 234.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1069901491
 MonoBehaviour:
@@ -4707,10 +4708,10 @@ RectTransform:
   m_Father: {fileID: 1330766902}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.30876407, y: 0.23}
-  m_AnchorMax: {x: 0.93480676, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 1.5}
-  m_SizeDelta: {x: 790, y: 122.2}
+  m_AnchorMin: {x: 0.3124622, y: 0.24000001}
+  m_AnchorMax: {x: 0.927269, y: 0.57000005}
+  m_AnchoredPosition: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 792.8, y: 150.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1658320624
 MonoBehaviour:
@@ -4733,20 +4734,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5afd89cdb8038964582dc4a233a21e01, type: 3}
-    m_FontSize: 70
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 70
+    m_MaxSize: 300
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '?????????????????
-
-'
+  m_Text: '- Logro oculto -'
 --- !u!222 &1658320625
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4783,10 +4782,10 @@ RectTransform:
   m_Father: {fileID: 125124460}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.3416381, y: 0.4}
-  m_AnchorMax: {x: 0.8793305, y: 0.68}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 0.0000038146973}
-  m_SizeDelta: {x: 816.4, y: 92.6}
+  m_AnchorMin: {x: 0.316, y: 0.5}
+  m_AnchorMax: {x: 0.91233057, y: 0.65000004}
+  m_AnchoredPosition: {x: 0.1977005, y: 0}
+  m_SizeDelta: {x: 772.2, y: 63.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1705117809
 MonoBehaviour:
@@ -4820,7 +4819,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Como pedro por su casa
+  m_Text: Pedro por su casa
 --- !u!222 &1705117810
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5132,10 +5131,10 @@ RectTransform:
   m_Father: {fileID: 423481774}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.28800002, y: 0.34}
-  m_AnchorMax: {x: 0.8307033, y: 0.55}
-  m_AnchoredPosition: {x: -0.000015258789, y: 2.6000004}
-  m_SizeDelta: {x: 698.55, y: 90.7}
+  m_AnchorMin: {x: 0.28800002, y: 0.28}
+  m_AnchorMax: {x: 0.8573076, y: 0.55}
+  m_AnchoredPosition: {x: -1.1, y: 2}
+  m_SizeDelta: {x: 741.1, y: 124.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1815727277
 MonoBehaviour:
@@ -5162,14 +5161,14 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 80
+    m_MaxSize: 200
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ?????????????????
+  m_Text: '- logro oculto -'
 --- !u!222 &1815727278
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5250,6 +5249,74 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1825181808}
+--- !u!1 &1837185259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1837185260}
+  - component: {fileID: 1837185262}
+  - component: {fileID: 1837185261}
+  m_Layer: 5
+  m_Name: Recuadro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1837185260
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1837185259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 332236038}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.12412873, y: 0.0707249}
+  m_AnchorMax: {x: 0.91, y: 0.56636435}
+  m_AnchoredPosition: {x: 0.5780029, y: 1.823}
+  m_SizeDelta: {x: 0.95999146, y: 3.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1837185261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1837185259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 43d42a961d576d448b04511aecc8c101, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1837185262
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1837185259}
 --- !u!1 &1866683157
 GameObject:
   m_ObjectHideFlags: 0
@@ -6026,10 +6093,10 @@ RectTransform:
   m_Father: {fileID: 1570875746}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.29915377, y: 0.25}
-  m_AnchorMax: {x: 0.89815384, y: 0.55}
-  m_AnchoredPosition: {x: -1, y: 1.3436999}
-  m_SizeDelta: {x: 732.3, y: 120.7}
+  m_AnchorMin: {x: 0.28, y: 0.28}
+  m_AnchorMax: {x: 0.9364614, y: 0.58000004}
+  m_AnchoredPosition: {x: -0.48999786, y: 1.1999998}
+  m_SizeDelta: {x: 825.6, y: 136.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2074801436
 MonoBehaviour:
@@ -6063,7 +6130,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Habla con todos los NPC\u2019s"
+  m_Text: "Habla con todos los NPC\u2019s en menos de 5 min"
 --- !u!222 &2074801437
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6102,10 +6169,10 @@ RectTransform:
   m_Father: {fileID: 1755420143}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.26875, y: 0.091000006}
-  m_AnchorMax: {x: 0.637, y: 0.24525777}
-  m_AnchoredPosition: {x: -0.18079376, y: 0.121032715}
-  m_SizeDelta: {x: -1.973999, y: -0.47000122}
+  m_AnchorMin: {x: 0.70500004, y: 0}
+  m_AnchorMax: {x: 1, y: 0.1088753}
+  m_AnchoredPosition: {x: 0.3999939, y: 0.45300293}
+  m_SizeDelta: {x: 0, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2085746003
 MonoBehaviour:

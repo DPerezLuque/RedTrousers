@@ -191,8 +191,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1649124912269194}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.94, y: 0.46, z: -1}
-  m_LocalScale: {x: 0.16666667, y: 0.16666667, z: 1}
+  m_LocalPosition: {x: -0.999, y: 0.467, z: -1}
+  m_LocalScale: {x: 0.18, y: 0.16666667, z: 1}
   m_Children:
   - {fileID: 4718366679700980}
   - {fileID: 4540768331094840}
@@ -206,7 +206,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1282271220264444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.5744, y: 0.49100006, z: 0}
+  m_LocalPosition: {x: 5.574, y: 0.506, z: 0}
   m_LocalScale: {x: 2.3852, y: -0.2197, z: 1}
   m_Children: []
   m_Father: {fileID: 4693151584502480}
@@ -334,7 +334,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4e9e3ab71b4b67846a5c0a1dcc7cfc45, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -442,7 +442,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 5afd89cdb8038964582dc4a233a21e01, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190247
+    rgba: 4278190335
 --- !u!102 &102892608991103440
 TextMesh:
   serializedVersion: 3
@@ -463,7 +463,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 5afd89cdb8038964582dc4a233a21e01, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190247
+    rgba: 4278190080
 --- !u!114 &114866744116155790
 MonoBehaviour:
   m_ObjectHideFlags: 1

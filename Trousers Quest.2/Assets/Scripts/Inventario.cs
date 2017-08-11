@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Inventario : MonoBehaviour {
 
     public GameObject interfaz;
-    bool aux;
+    //bool aux;
 
 	//1.START
     void Start()
@@ -24,6 +24,6 @@ public class Inventario : MonoBehaviour {
             interfaz.transform.GetChild(0).GetChild(i).gameObject.SetActive(activar);     
         }
         interfaz.transform.GetChild(1).GetChild(GameManager.instance.EstadoPersonaje()).gameObject.SetActive(activar);
-        aux = !activar;
+        //aux = !activar;
     }
 }

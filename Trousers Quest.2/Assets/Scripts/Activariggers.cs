@@ -25,14 +25,14 @@ public class Activariggers : MonoBehaviour {
             Destroy(this.gameObject);
         }    
     }
-    void Update()
+    /*void Update()
     {
-        /*if (numTrigger == GameManager.estadoPersonaje)
+        if (numTrigger == GameManager.estadoPersonaje)
         {
             this.GetComponent<BoxCollider2D>().enabled = true;          //esto no me mola nada pero no cambiamos de escena tiio
             this.GetComponent<BoxCollider2D>().isTrigger = true;
-        }*/
-    }
+        }
+    }*/
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<PlayerController>() && numTrigger == GameManager.estadoPersonaje)

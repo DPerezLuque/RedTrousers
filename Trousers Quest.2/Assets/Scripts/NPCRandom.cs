@@ -37,6 +37,7 @@ public class NPCRandom : MonoBehaviour {
 
     public void Activado()
     {
+        Player.GetComponent<PlayerController>().vel = Player.GetComponent<PlayerController>().velOr; //Restaura vel original del jugador
         Player.GetComponent<PlayerController>().compAudio.PlayOneShot
                   (Player.GetComponent<PlayerController>().sonidos[1], GameManager.volu);
         Panel.SetActive(true);

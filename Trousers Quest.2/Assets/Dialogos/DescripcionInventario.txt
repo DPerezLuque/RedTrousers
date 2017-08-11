@@ -1,18 +1,18 @@
-0
-Pantalones blancos: no abrigan demasiado, pero es mejor que ir en ropa interior. En combate, asestan un ataque basico.
+﻿0
+Pantalones blancos: no abrigan demasiado, pero es mejor que ir en ropa interior. En combate, asestan un ataque básico.
 *
 1
-Guantes: los guantes de monta�ismo de tu padre. Aumenta tu ataque al ser usados, pero hacen mas bien poco danio.
+Guantes: los guantes de montañismo de tu padre. Aumentan tu ataque al ser usados, pero hacen más bien poco daño.
 *
 2
-Sombrero: este sombrero legendario del dragon te refresca en combate curando la mitad de tu vida. Tiene flecos cuquis.
+Sombrero: este sombrero legendario del dragón te refresca en combate curando la mitad de tu vida. Tiene flecos cuquis.
 *
 3
 Botas: las misteriosas botas de la maleta. Tienen insecticida en la suela para envenenar a los enemigos, asi que no las toques mucho.
 *
 4
-Camiseta: parece delgada pero es tan gorda que te hace invulnerable por un turno, ademas de aumentar tu defensa (Uso unico).
+Camiseta: parece delgada pero es tan gorda que te hace invulnerable por un turno, además de aumentar tu defensa (Uso único).
 *
 5
-Pantalones rojos: tus legendarios pantalones con el poder que una vez te dio Cthulhu. En batalla, proporciona un golpe extraordinario.
+Pantalones rojos: tus legendarios pantalones con el poder que una vez te dio Cthzulu. En batalla, proporcionan un golpe extraordinario.
 *
