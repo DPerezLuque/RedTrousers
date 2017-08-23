@@ -129,18 +129,21 @@ public class Combate : MonoBehaviour
 			else 
 			{
 				string partida="";
-				StreamReader entrada = new StreamReader("combates");
+				StreamReader entrada = new StreamReader(@"Red Trousers_Saves\combates");
 				while (!entrada.EndOfStream)
 					partida += entrada.ReadLine();
 				entrada.Close();
 
-				StreamWriter salida = new StreamWriter("combates");
+				StreamWriter salida = new StreamWriter(@"Red Trousers_Saves\combates");
 				int k = 0;
 				while (k<11)
 				{
 					if (partida[k] == 'X')
+					{
 						salida.WriteLine("1");
-					
+						Debug.Log("ee");
+					}
+
 					else
 						salida.WriteLine(partida[k]);
 					k++;
@@ -162,7 +165,18 @@ public class Combate : MonoBehaviour
 					//Moth-illa
 					GameManager.instance.ConsigueLogro(5);
 					//Maaazo pro
-					if (!File.Exists("partida"))
+					if (File.Exists(@"Red Trousers_Saves\partida"))
+					{
+						StreamReader entrada2 = new StreamReader(@"Red Trousers_Saves\combates");
+						string s = "";
+						for (int i = 0; i < 4; i++)
+							s = entrada2.ReadLine();
+						entrada2.Close();
+
+						if(s=="0")
+							GameManager.instance.ConsigueLogro(3);
+					}
+					else
 						GameManager.instance.ConsigueLogro(3);
 					GameManager.instance.GuardaPartida(true);
 				}

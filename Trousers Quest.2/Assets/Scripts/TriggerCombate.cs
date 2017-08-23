@@ -13,7 +13,7 @@ public class TriggerCombate : MonoBehaviour {
     {
 
 		//Leemos el archivo
-		StreamReader entrada = new StreamReader("combates");
+		StreamReader entrada = new StreamReader(@"Red Trousers_Saves\combates");
 		//Leemos el archivo de combate
 		for (int i = 0; i < 11; i++)
 			archivo += entrada.ReadLine();
@@ -33,7 +33,7 @@ public class TriggerCombate : MonoBehaviour {
 		if (j != 11) 
 		{
 			//Sobreescribimos
-			StreamWriter salida = new StreamWriter("combates");
+			StreamWriter salida = new StreamWriter(@"Red Trousers_Saves\combates");
 
 			int k = 0;
 			while (k < 11)
@@ -49,7 +49,7 @@ public class TriggerCombate : MonoBehaviour {
 
 			//Hay que volver a leer el archivo
 			archivo = "";
-			StreamReader entrada2 = new StreamReader("combates");
+			StreamReader entrada2 = new StreamReader(@"Red Trousers_Saves\combates");
 			//Leemos el archivo de combate
 			for (int i = 0; i < 11; i++)
 				archivo += entrada2.ReadLine();
@@ -62,7 +62,7 @@ public class TriggerCombate : MonoBehaviour {
     {
         if (other.GetComponent<PlayerController>())
         {
-			StreamWriter salida = new StreamWriter("combates");
+			StreamWriter salida = new StreamWriter(@"Red Trousers_Saves\combates");
 
 			//Bucle para encontrar el nº que corresponde
 			int i = 0;

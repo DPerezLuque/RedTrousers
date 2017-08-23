@@ -104,26 +104,6 @@ public class Interactuable : MonoBehaviour {
             Invoke("Interact", 0.1f);
         }
 
-        //Comprueba si has hablado con todos los NPC del juego
-        if (esNPC)
-        {
-            GameManager.NPcsHablados[numNPC] = true;
-            int i = 0;
-            bool todosHablados = true;
-            while(i < GameManager.NPcsHablados.Length && todosHablados)
-            {
-                if (!GameManager.NPcsHablados[i])
-                {
-                    todosHablados = false;
-                }
-                i++;
-            }
-            if (todosHablados)
-            {
-                GameManager.instance.ConsigueLogro(2);
-            }
-        }
-
         //LogroPapelera
         if (esPapelera)
         {

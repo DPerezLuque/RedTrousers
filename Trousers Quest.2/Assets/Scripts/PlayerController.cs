@@ -209,8 +209,9 @@ public class PlayerController : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			SceneManager.LoadScene("Menú");
-			if (!File.Exists("partida"))
-				File.Delete("combates");
+			if (!File.Exists(@"Red Trousers_Saves\partida"))
+				GameManager.instance.SetMusica(0);
+
 		}
 
         //Correr
@@ -239,7 +240,7 @@ public class PlayerController : MonoBehaviour
 				npcDesactivar = GameObject.FindGameObjectWithTag("NPCS").transform.GetChild(other.GetComponent<Traslado>().numCasa).gameObject;
 				transform.position = new Vector2(posXSalida, posYSalida);
                 numCasa = other.GetComponent<Traslado>().numCasa;
-                print(numCasa + "TT");
+
                 //LOGRO CASAS
                 casasVisitadas[other.GetComponent<Traslado>().numCasa] = true;
 				int i = 0;
@@ -253,7 +254,6 @@ public class PlayerController : MonoBehaviour
 				if (todasVisitadas)
 					GameManager.instance.ConsigueLogro(4);
 			}
-
 
 			else
 			{

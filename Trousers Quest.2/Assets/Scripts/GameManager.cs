@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 	public GameObject canvas;
 	Text textoVida, textoPoder;
 	GameObject MensajeLogro;
-
+	GameObject BotonReinicio;
 
     //LOGRO NPCS
     public static bool [] NPcsHablados = new bool [27];
@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
 		compAudio = GetComponent<AudioSource>();
 
 		if (canvas != null)
-			MensajeLogro = canvas.transform.GetChild(1).gameObject;
+			MensajeLogro = canvas.transform.FindChild("MensajeLogros").gameObject;
+		
 			
         ActualizaVol(volu);
 
@@ -58,13 +59,30 @@ public class GameManager : MonoBehaviour
 			PlayMusic(musicaActual);
 			textoVida = canvas.transform.GetChild(0).GetChild(1).GetComponent<Text>();
 			textoPoder = canvas.transform.GetChild(0).GetChild(2).GetComponent<Text>();
+
+			if(File.Exists(@"Red Trousers_Saves\partida"))
+			{
+				StreamReader entrada = new StreamReader(@"Red Trousers_Saves\combates");
+				string s = "";
+				while (!entrada.EndOfStream)
+					s += entrada.ReadLine();
+				entrada.Close();
+
+				if ((s[4] == '1' && estadoPersonaje < 2) || (s[7] == '1' && estadoPersonaje < 4)
+				    || (s[9] == '1' && estadoPersonaje < 5))
+				{
+					Invoke("AumentaEstado", 0.2f);
+					Invoke("Guarda", 0.3f);
+				}
+			}
 		}
 
 		//2.Música del menú
 		else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Menú"))
 		{
+			Directory.CreateDirectory("Red Trousers_Saves");
 			PlayMusic(0);
-			if (File.Exists("partida"))
+			if (File.Exists(@"Red Trousers_Saves\partida"))
 				LeePartida();
 			else
 			{
@@ -73,6 +91,24 @@ public class GameManager : MonoBehaviour
 				poder = 15;
 			}
 			vidaMaxima = hp;
+
+			BotonReinicio = canvas.transform.FindChild("Menu").FindChild("Reinicio").gameObject;
+
+			if (File.Exists(@"Red Trousers_Saves\combates"))
+			{
+				StreamReader entrada = new StreamReader(@"Red Trousers_Saves\combates");
+				string s = "";
+				for (int i = 0; i < 11; i++)
+					s = entrada.ReadLine();
+				entrada.Close();
+
+				if (s == "0")
+					BotonReinicio.SetActive(false);
+				else
+					BotonReinicio.SetActive(true);
+			}
+		    else
+				BotonReinicio.SetActive(false);
 		}
 
 		//3.Música de créditos
@@ -162,7 +198,7 @@ public class GameManager : MonoBehaviour
 	//14.LEE PARTIDA
 	public void LeePartida() 
 	{
-		StreamReader entrada = new StreamReader("partida");
+		StreamReader entrada = new StreamReader(@"Red Trousers_Saves\partida");
 
 		//Stats
 		estadoPersonaje = int.Parse(entrada.ReadLine());
@@ -191,27 +227,13 @@ public class GameManager : MonoBehaviour
     {
 		SceneManager.LoadScene("Interacción");
 
-		if (!File.Exists("partida"))
+		if (!File.Exists(@"Red Trousers_Saves\partida"))
 		{
 			//Creamos el erchivo de los combates
-			StreamWriter salida = new StreamWriter("combates");
+			StreamWriter salida = new StreamWriter(@"Red Trousers_Saves\combates");
 			for (int i = 0; i < 11; i++)
 				salida.WriteLine("0");
 			salida.Close();
-		}
-		else
-		{
-			StreamReader entrada = new StreamReader("combates");
-			string s = "";
-			while (!entrada.EndOfStream)
-				s += entrada.ReadLine();
-			entrada.Close();
-
-			if ((s[4] == '1' && estadoPersonaje < 2)||(s[7] == '1' && estadoPersonaje < 4)) 
-			{
-				Invoke("AumentaEstado", 0.2f);
-				Invoke("Guarda", 0.5f);
-			}
 		}
     }
 
@@ -238,7 +260,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		//Escribimos los datos
-		StreamWriter salida = new StreamWriter("partida");
+		StreamWriter salida = new StreamWriter(@"Red Trousers_Saves\partida");
 		if (finJuego)
 			salida.WriteLine("5");
 		else
@@ -291,9 +313,8 @@ public class GameManager : MonoBehaviour
 		hp = vidaMaxima;
 		if (estadoPersonaje == 5)
 			ConsigueLogro(1);
-		if (jugador != null)
+		if(jugador!=null)
 			jugador.GetComponent<PlayerController>().anim.SetInteger("Estado", estadoPersonaje);
-		
 	}
 
 	//21.CONSIGUE UN LOGRO
@@ -304,7 +325,6 @@ public class GameManager : MonoBehaviour
 			MensajeLogro.SetActive(true);
 			Invoke("QuitaMensaje", 2f);
 			logros[i] = true;
-			Debug.Log("Logro " + i + " conseguido");
 
 			//Logro de diamante
 			int j = 0;
@@ -349,5 +369,46 @@ public class GameManager : MonoBehaviour
 	void Guarda() 
 	{
 		GuardaPartida(false);
+	}
+
+	//28.DA EL LOGRO DEL VOLUMEN
+	public void LogroVolumen() 
+	{
+		ConsigueLogro(2);
+	}
+
+	//29.REINCIA LA PARTIDA
+	public void ReiniciaPartida() 
+	{
+		//Reiniciamos archivos
+		if (File.Exists(@"Red Trousers_Saves\partida"))
+		{
+			StreamReader entrada = new StreamReader(@"Red Trousers_Saves\partida");
+			//Leemos logros
+			string s = "";
+			for (int i = 0; i < 6; i++)
+				s = entrada.ReadLine();
+			for (int j = 0; j < 10; j++)
+				logros[j] = (s[j]=='1');
+			entrada.Close();
+
+			//Borramos la partida
+			File.Delete(@"Red Trousers_Saves\partida");
+		}
+
+		StreamWriter salida = new StreamWriter(@"Red Trousers_Saves\combates");
+		for (int i = 0; i < 11; i++)
+			salida.WriteLine("0");
+		salida.Close();
+
+		//Reiniciamos variables
+		guardadoX = 0;
+		guardadoY = 0;
+		estadoPersonaje = 0;
+		hp = 20;
+		poder = 15;
+	    vidaMaxima = hp;
+		GuardaPartida(false);
+		BotonReinicio.SetActive(false);
 	}
 }
